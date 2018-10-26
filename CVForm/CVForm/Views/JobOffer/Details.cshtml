@@ -1,0 +1,13 @@
+﻿@model JobOffer
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Details</h2>
+@{
+    if (Model != null)
+    {
+        <h4>Job offer #@Model.ID: @Model.JobTitle</h4>
+        <span>@Html.ActionLink("Go back", "Index", "JobOffer", null, null)</span>
+    }
+}
