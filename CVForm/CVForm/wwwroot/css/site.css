@@ -35,3 +35,17 @@ body {
         display: none;
     }
 }
+.search-box {
+    margin-bottom: 14px;
+}
+
+.table .thead-dark th {
+    color: #fff;
+    background-color: #212529;
+    border-color: #32383e;
+}
+
+/*.table .thead-dark th {
+    color: inherit;
+    border-color: #dee2e6;
+}*/
