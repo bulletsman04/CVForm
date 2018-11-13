@@ -1,0 +1,26 @@
+﻿@model JobApplication
+@{
+    ViewData["Title"] = "Details";
+}
+
+<div class="row page-box">
+    <h1>@Model.FirstName @Model.LastName</h1>
+    <div class="col-sm-8">
+        <div class="offer-description" id="previewMarkdown">
+           ...
+        </div>
+    </div>
+    <div class="col-sm-4">
+        <div class="offer-details">
+            <div>
+                <label>Email address: </label>
+                <span>@Model.EmailAddress</span>
+            </div>
+            <div>
+                <label>@Model.PhoneNumber: </label>
+                <span>@Model.PhoneNumber</span>
+            </div>
+        </div>
+    </div>
+</div>
+
