@@ -1,66 +1,42 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
+using CVForm.EntityFramework;
 using CVForm.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Internal;
 
 namespace CVForm.Controllers
 {
     
     public class JobOfferController : Controller
     {
+        private readonly DataContext _context;
 
-        public static List<Company> _companies = new List<Company>()
+        public JobOfferController(DataContext context)
         {
-            new Company(){ ID = 1, Name="P&G"},
-            new Company(){ ID = 2, Name="Microsoft"},
-            new Company(){ ID = 3, Name="Google"}
-        };
-
-
-        public static List<JobOffer> _jobOffers = new List<JobOffer>
-
-        {
-            new JobOffer{
-                ID =1,
-                JobTitle = "Backend Developer",
-                Company = _companies.FirstOrDefault(c => c.Name =="P&G"),
-                Created = DateTime.Now.AddDays(-2),
-                Description = "Backend C# developer with intrests about IoT solutions. The main task would be building API which expose data from phisical devices. Description need to have at least 100 characters so I am adding some. In test case I reccomend you to use Lorem Impsum.",
-                Location = "Poland",
-                SalaryFrom = 2000,
-                SalaryTo = 10000,
-                ValidUntil = DateTime.Now.AddDays(20)
-            },
-            new JobOffer{
-                ID =2,
-                JobTitle = "Frontend Developer",
-                Company = _companies.FirstOrDefault(c => c.Name =="Microsoft"),
-                Created = DateTime.Now.AddDays(-2),
-                Description = "Developing Office 365 front end interface. Working with SharePoint and graph API. Connecting with AAD and building ML for Mailbox smart assistant. Description need to have at least 100 characters so I am adding some. In test case I reccomend you to use Lorem Impsum.",
-                Location = "Poland",
-                SalaryFrom = 2000,
-                SalaryTo = 10000,
-                ValidUntil = DateTime.Now.AddDays(20)
-            }
-        };
+            _context = context;
+        }
 
     
         
         public IActionResult Index(string searchString)
         {
-            if(String.IsNullOrEmpty(searchString))
-                return View(_jobOffers);
+            List<JobOffer> searchResult = _context.JobOfers.Include(item => item.Company).ToList();
+            if (String.IsNullOrEmpty(searchString))
+                return View(searchResult);
 
-            List<JobOffer> searchResult = _jobOffers.FindAll(item => item.JobTitle.Contains(searchString));
+             searchResult = searchResult.FindAll(item => item.JobTitle.Contains(searchString)).ToList();
             return View(searchResult);
         }
 
         public IActionResult Details(int? id)
         {
-            JobOffer selected = _jobOffers.FirstOrDefault(item => item.ID == id);
+            JobOffer selected = _context.JobOfers.Include(item => item.Company).Include(item => item.JobApplications).FirstOrDefault(item => item.ID == id);
 
             return View(selected);
         }
@@ -69,7 +45,7 @@ namespace CVForm.Controllers
         {
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            var offer = _jobOffers.Find(item => item.ID == id);
+            var offer = _context.JobOfers.Include(item => item.Company).FirstOrDefault(item => item.ID == id);
 
             if (offer == null)
                 return new HttpStatusCodeResult(HttpStatusCode.NotFound);
@@ -83,8 +59,13 @@ namespace CVForm.Controllers
         {
             if (!ModelState.IsValid)
                 return View();
-            var offer = _jobOffers.Find(item => item.ID == model.ID);
-            offer.JobTitle = model.JobTitle;
+            var offer = _context.JobOfers.FirstOrDefault(item => item.ID == model.ID);
+            if (offer != null)
+            {
+                offer.JobTitle = model.JobTitle;
+                offer.Description = model.Description;
+                await _context.SaveChangesAsync();
+            }
             return RedirectToAction("Details", new {id = model.ID});
         }
 
@@ -94,7 +75,9 @@ namespace CVForm.Controllers
         {
             if(id==null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            _jobOffers.RemoveAll(item => item.ID == id);
+            _context.RemoveRange(_context.JobOfers.Where(item => item.ID == id));
+          
+            await _context.SaveChangesAsync();
 
             return RedirectToAction("Index");
         }
@@ -103,7 +86,7 @@ namespace CVForm.Controllers
         {
             var model = new JobOfferCreateView()
             {
-                Companies = _companies
+                Companies = _context.Companies.ToList()
             };
 
             return View(model);
@@ -115,17 +98,15 @@ namespace CVForm.Controllers
         {
             if (!ModelState.IsValid)
             {
-                model.Companies = _companies;
+                model.Companies = _context.Companies.ToList();
                 return View(model);
             }
 
-            var id = _jobOffers.Max(j => j.ID) + 1;
-                
-            _jobOffers.Add( new JobOffer()
+         
+           JobOffer jobOffer =  new JobOffer()
             {
-                ID = id,
+                
                 CompanyId = model.CompanyId,
-                Company = _companies.FirstOrDefault(c => c.ID == model.CompanyId),
                 Description = model.Description,
                 JobTitle = model.JobTitle,
                 Location = model.Location,
@@ -133,7 +114,18 @@ namespace CVForm.Controllers
                 SalaryTo = model.SalaryTo,
                 ValidUntil = model.ValidUntil,
                 Created = DateTime.Now
-            });
+            };
+            try
+            {
+
+                _context.JobOfers.Add(jobOffer);
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateException e)
+            {
+                model.Companies = _context.Companies.ToList();
+                return View(model);
+            }
 
             return RedirectToAction("Index");
         }

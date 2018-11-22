@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
+using CVForm.EntityFramework;
 using CVForm.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,16 +11,22 @@ namespace CVForm.Controllers
 {
     public class CompaniesController : Controller
     {
+        private readonly DataContext _context;
+
+        public CompaniesController(DataContext context)
+        {
+            _context = context;
+        }
         public IActionResult Index()
         {
-            return View(JobOfferController._companies);
+            return View(_context.Companies.ToList());
         }
 
         public IActionResult Edit(int? id)
         {
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            var offer = JobOfferController._companies.Find(item => item.ID == id);
+            var offer = _context.Companies.FirstOrDefault(item => item.ID == id);
 
             if (offer == null)
                 return new HttpStatusCodeResult(HttpStatusCode.NotFound);
@@ -33,8 +40,9 @@ namespace CVForm.Controllers
         {
             if (!ModelState.IsValid)
                 return View();
-            var offer = JobOfferController._companies.Find(item => item.ID == model.ID);
+            var offer = _context.Companies.FirstOrDefault(item => item.ID == model.ID);
             offer.Name = model.Name;
+            await _context.SaveChangesAsync();
             return RedirectToAction("Index");
         }
 
@@ -44,8 +52,8 @@ namespace CVForm.Controllers
         {
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            JobOfferController._companies.RemoveAll(item => item.ID == id);
-
+            _context.Companies.RemoveRange(_context.Companies.Where(item => item.ID == id));
+            await _context.SaveChangesAsync();
             return RedirectToAction("Index");
         }
     }

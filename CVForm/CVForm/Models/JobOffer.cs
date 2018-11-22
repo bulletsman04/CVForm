@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace CVForm.Models
 {
@@ -27,6 +30,7 @@ namespace CVForm.Models
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyy-MM-dd}")]
         [Display(Name = "Valid until")]
         public DateTime? ValidUntil { get; set; }
+        [ForeignKey("OfferId")]
         public List<JobApplication> JobApplications { get; set; } = new List<JobApplication>();
 
     }
