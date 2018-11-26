@@ -21,6 +21,8 @@ namespace CVForm.Models
         public decimal? SalaryFrom { get; set; }
         [Display(Name = "Salary to")]
         public decimal? SalaryTo { get; set; }
+        [DataType(DataType.Date)]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyy-MM-dd}")]
         public DateTime Created { get; set; }
         public string Location { get; set; }
         [Required]
