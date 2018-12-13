@@ -6,6 +6,7 @@ using System.Net;
 using System.Threading.Tasks;
 using CVForm.EntityFramework;
 using CVForm.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Internal;
@@ -22,8 +23,8 @@ namespace CVForm.Controllers
             _context = context;
         }
 
-    
-        
+
+        [Authorize]
         public IActionResult Index(string searchString)
         {
             List<JobOffer> searchResult = _context.JobOfers.Include(item => item.Company).ToList();

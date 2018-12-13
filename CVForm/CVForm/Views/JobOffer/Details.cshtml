@@ -3,6 +3,7 @@
     ViewData["Title"] = "Details";
 }
 
+<script src="@Url.Content("~/js/offers-details.js")"></script>
 <div class="row page-box">
     <h1>@Model.JobTitle</h1>
     <div class="col-sm-8">
@@ -12,40 +13,40 @@
     </div>
     <div class="col-sm-4">
         <div class="offer-details">
-            <div>
-                <label>Company:</label>
-                <span>@Model.Company.Name</span>
-            </div>
+            <span id="offer-id" hidden="hidden">@Model.ID</span>
             <div>
                 <label>Location:</label>
-                <span>@Model.Location</span>
+                <span id="location">@Model.Location</span>
             </div>
-            @if (Model.SalaryFrom.HasValue){
+            @if (Model.SalaryFrom.HasValue)
+            {
                 <div>
                     <label>Salary from:</label>
-                    <span>@Model.SalaryFrom  (PLN)</span>
+                    <span id="salaryFrom">@Model.SalaryFrom (PLN)</span>
                 </div>
             }
-            @if (Model.SalaryTo.HasValue){
+            @if (Model.SalaryTo.HasValue)
+            {
                 <div>
                     <label>Salary to:</label>
-                    <span>@Model.SalaryTo</span>
+                    <span id="salaryTo">@Model.SalaryTo</span>
                 </div>
             }
             <div>
                 <label>Created:</label>
-                <span>@Model.Created</span>
+                <span id="created">@Model.Created</span>
             </div>
-            @if (Model.ValidUntil.HasValue){
+            @if (Model.ValidUntil.HasValue)
+            {
                 <div>
                     <label>Valid:</label>
-                    <span>@Model.ValidUntil.Value.Subtract(DateTime.Now).Days days (@Model.ValidUntil)</span>
+                    <span id="valid">@Model.ValidUntil.Value.Subtract(DateTime.Now).Days days (@Model.ValidUntil)</span>
                 </div>
             }
             <div>
-                @Html.ActionLink("Apply now", "Index","Apply", new { id = Model.ID }, new { @class = "btn btn-primary" })
-                @Html.ActionLink("Edit", "Edit", new { id = Model.ID }, new { @class = "btn btn-primary" })
-                @using (Html.BeginForm("Delete", "JobOffer", new { Model.ID }, FormMethod.Post, null, new { style = "display:inline;" }))
+                @Html.ActionLink("Apply now", "Index", "Apply", new {id = Model.ID}, new {@class = "btn btn-primary"})
+                @Html.ActionLink("Edit", "Edit", new {id = Model.ID}, new {@class = "btn btn-primary"})
+                @using (Html.BeginForm("Delete", "JobOffer", new {Model.ID}, FormMethod.Post, null, new {style = "display:inline;"}))
                 {
                         @*@Html.AntiForgeryToken()*@
                     <button type="submit" class="btn btn-danger">Delete</button>
@@ -66,15 +67,7 @@
                 <th scope="col">Phone</th>
             </tr>
             </thead>
-            <tbody>
-            @foreach (var application in Model.JobApplications)
-            {
-                <tr>
-                    <td>@Html.ActionLink(application.FirstName + " " + application.LastName, "Details","Apply", new { offerId = application.OfferId, applicationId = application.Id })</td>
-                    <td>@application.EmailAddress</td>
-                    <td>@application.PhoneNumber</td>
-                </tr>
-            }
+            <tbody id="applications">
             </tbody>
         </table>
     </div>

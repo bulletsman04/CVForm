@@ -10,6 +10,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CVForm.Controllers
 {
+    [Route("api/[controller]/[action]")]
     [Route("api/[controller]")]
     [ApiController]
     public class JobOffersApiController : ControllerBase
@@ -21,8 +22,11 @@ namespace CVForm.Controllers
             _context = context;
         }
 
-
-        
+        /// <summary>
+        /// Gets all the job offers
+        /// </summary>
+        /// <returns>All job offers</returns>
+        [HttpGet]
         public ActionResult<List<JobOffer>> Offers()
         {
             List<JobOffer> searchResult = _context.JobOfers.Include(item => item.Company).ToList();
@@ -30,7 +34,10 @@ namespace CVForm.Controllers
             return Ok(searchResult);
         }
 
-       
+        /// <summary>
+        /// Gets all the job offers
+        /// </summary>
+        /// <returns>All job offers</returns>
         [HttpGet("{searchString}")]
         public ActionResult<List<JobOffer>> OffersSearch(string searchString)
         {
