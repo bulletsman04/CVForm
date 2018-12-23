@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>CVForm</name>
+    </assembly>
+    <members>
+        <member name="M:CVForm.Controllers.JobApplicationsApiController.OffersSearch(System.Int32)">
+            <summary>
+            Gets all the job offers
+            </summary>
+            <returns>All job offers</returns>
+        </member>
+        <member name="M:CVForm.Controllers.JobOffersApiController.Offers">
+            <summary>
+            Gets all the job offers
+            </summary>
+            <returns>All job offers</returns>
+        </member>
+        <member name="M:CVForm.Controllers.JobOffersApiController.OffersSearch(System.String)">
+            <summary>
+            Gets all the job offers
+            </summary>
+            <returns>All job offers</returns>
+        </member>
+    </members>
+</doc>
