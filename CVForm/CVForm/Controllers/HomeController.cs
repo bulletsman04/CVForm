@@ -33,7 +33,7 @@ namespace CVForm.Controllers
 
             return View();
         }
-        [Authorize]
+        //[Authorize]
         public async Task<IActionResult> Contact()
         {
             AADGraph graph = new AADGraph(AppSettings);
