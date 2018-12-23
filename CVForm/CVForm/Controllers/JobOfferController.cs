@@ -24,7 +24,7 @@ namespace CVForm.Controllers
         }
 
 
-        [Authorize]
+        //[Authorize]
         public IActionResult Index(string searchString)
         {
             List<JobOffer> searchResult = _context.JobOfers.Include(item => item.Company).ToList();
