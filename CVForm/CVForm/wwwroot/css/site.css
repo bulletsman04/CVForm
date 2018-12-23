@@ -54,3 +54,29 @@ body {
     margin: 10px 0 0 0;
     padding: 0;
 }
+
+span.current {
+    cursor: auto !important;
+    background-color: #6E6E6E !important;
+    color: #ffffff;
+    font-weight: bold;
+    padding: 5px 10px;
+    border: 1px solid #000000;
+    margin-right: 4px;
+}
+
+td.pagesSwitchContent span a {
+    display: inline-block;
+    padding: 3px 10px;
+    margin-right: 4px;
+    border: 1px solid #998787;
+    cursor: pointer;
+}
+
+td.pagesSwitchContent span a {
+    text-decoration: none;
+}
+
+td.pagesSwitchContent {
+    text-align: right;
+}
