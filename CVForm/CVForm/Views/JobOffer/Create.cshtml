@@ -8,33 +8,34 @@
 <script src="@Url.Content("~/lib/jquery-validation/dist/additional-methods.js")"></script>
 <script src="@Url.Content("~/js/validation.js")"></script>
 <div class="row page-box">
-    <div class="col-sm-12">
+    <div class="col-sm-7">
         <h2>Now Job Offer</h2>
+        @* ToDo: Prepare the same validation on database (mostly done), server (not done) and jquery (mostly done) *@
         @using (Html.BeginForm("Create", "JobOffer", FormMethod.Post, new { id = "jobOfferForm" }))
         {
             @*@Html.AntiForgeryToken()*@
             <div class="form-group">
                 @Html.LabelFor(m => m.JobTitle)
-                @Html.EditorFor(m => m.JobTitle, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(m => m.JobTitle, new { htmlAttributes = new { @class = "form-control", data_bind = "value:jobTitle" } })
                 @Html.ValidationMessageFor(m => m.JobTitle, "", new { @class = "text-danger" })
             </div>
             <div class="form-group">
                 @Html.LabelFor(m => m.Company)
                 @Html.DropDownListFor(m => m.CompanyId,
                     Model.Companies.Select(c => new SelectListItem {Text =c.Name, Value = c.ID.ToString() }),
-                    new { @class = "form-control" })
+                    new { @class = "form-control", data_bind = "value:company" })
                 @Html.ValidationMessageFor(m => m.CompanyId, "", new { @class = "text-danger" })
             </div>
             <div class="form-group">
                 @Html.LabelFor(m => m.Location)
-                @Html.EditorFor(m => m.Location, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(m => m.Location, new { htmlAttributes = new { @class = "form-control", data_bind = "value:location" } })
                 @Html.ValidationMessageFor(m => m.Location, "", new { @class = "text-danger" })
             </div>
             <div class="form-group">
                 @Html.LabelFor(m => m.SalaryFrom)
                 <div class="input-group">
                     <span class="input-group-addon">PLN</span>
-                    @Html.EditorFor(m => m.SalaryFrom, new { htmlAttributes = new { @class = "form-control", placeholder = "From" } })
+                    @Html.EditorFor(m => m.SalaryFrom, new { htmlAttributes = new { @class = "form-control", placeholder = "From", data_bind = "value:salaryFrom" } })
                     <span class="input-group-addon">.00</span>
                 </div>
                 @Html.ValidationMessageFor(m => m.SalaryFrom, "", new { @class = "text-danger" })
@@ -43,7 +44,7 @@
                 @Html.LabelFor(m => m.SalaryTo)
                 <div class="input-group">
                     <span class="input-group-addon">PLN</span>
-                    @Html.EditorFor(m => m.SalaryTo, new { htmlAttributes = new { @class = "form-control", placeholder = "To" } })
+                    @Html.EditorFor(m => m.SalaryTo, new { htmlAttributes = new { @class = "form-control", placeholder = "To",  data_bind = "value:salaryTo" } })
                     <span class="input-group-addon">.00</span>
                 </div>
                 @Html.ValidationMessageFor(m => m.SalaryTo, "", new { @class = "text-danger" })
@@ -51,7 +52,7 @@
             <div class="form-group">
                 @Html.LabelFor(m => m.ValidUntil)
                 <div class="input-group">
-                    @Html.EditorFor(m => m.ValidUntil, new { htmlAttributes = new { @class = "form-control", type = "Date" } })
+                    @Html.EditorFor(m => m.ValidUntil, new { htmlAttributes = new { @class = "form-control", type = "Date",  data_bind = "value:validUntil" } })
                     <span class="input-group-addon">
                         <span class="glyphicon glyphicon-calendar"></span>
                     </span>
@@ -60,7 +61,7 @@
             </div>
             <div class="form-group">
                 @Html.LabelFor(m => m.Description)
-                @Html.TextAreaFor(m => m.Description, new { @class = "form-control", placeholder = "Enter description" })
+                @Html.TextAreaFor(m => m.Description, new { @class = "form-control", placeholder = "Enter description", data_bind = "value:description" })
                 @Html.ValidationMessageFor(m => m.Description, "", new { @class = "text-danger" })
             </div>
             <div class="form-group">
@@ -68,4 +69,10 @@
             </div>
         }
     </div>
+    <div class="col-sm-5">
+        @await Html.PartialAsync("_DetailsPartial")
+    </div>
+    
+    <script src="~/lib/knockout/knockout-debug.js"></script>
+    <script src="~/js/joboffer_knockout.js"></script>
 </div>

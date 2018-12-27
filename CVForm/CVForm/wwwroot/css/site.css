@@ -81,7 +81,9 @@ td.pagesSwitchContent {
     text-align: right;
 }
 
-
+.btn {
+    margin-top: 5px;
+}
 
 
 /* JQuery Validation classes */
@@ -93,3 +95,4 @@ td.pagesSwitchContent {
 .js-success {
     border-color: green;
 }
+

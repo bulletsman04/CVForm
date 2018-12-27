@@ -1,0 +1,57 @@
+﻿@* ToDo: Some title, like "Preview Title" *@
+<div class="row page-box">
+    <h1 data-bind='text: jobTitle'></h1>
+    <div class="col-sm-8">
+        @* ToDo: Description trim *@
+        <div class="offer-description" id="previewMarkdown">
+            <span data-bind='text: description'></span>
+        </div>
+    </div>
+    <div class="col-sm-4">
+        <div class="offer-details">
+            <div>
+                <label>Company:</label>
+                <span id="company" data-bind='text:companyName'></span>
+            </div>
+            <div>
+                <label>Location:</label>
+                <span id="location" data-bind='text: location'></span>
+            </div>
+
+            <div>
+                <label>Salary from:</label>
+                <span id="salaryFrom" data-bind='text: salaryFrom'>(PLN)</span>
+            </div>
+
+
+            <div>
+                <label>Salary to:</label>
+                <span id="salaryTo" data-bind='text: salaryTo'></span>
+            </div>
+
+            <div>
+                @* ToDo: Parsed date *@
+                <label>Created:</label>
+                <span id="created" data-bind='text: created'></span>
+            </div>
+
+            <div>
+                <label>Valid:</label>
+                <span id="valid" data-bind='text: validDays'></span> days <span data-bind='text: validUntil'></span>
+            </div>
+
+            <div>
+                @Html.ActionLink("Apply now", "Index", "Apply", new { id = Model.ID }, new { @class = "btn btn-primary", disabled = "disabled" })
+                @Html.ActionLink("Edit", "Edit", new { id = Model.ID }, new { @class = "btn btn-primary", disabled = "disabled" })
+                @using (Html.BeginForm("Delete", "JobOffer", new { Model.ID }, FormMethod.Post, null, new { style = "display:inline;" }))
+                {
+                    @*@Html.AntiForgeryToken()*@
+                    <button type="submit" class="btn btn-danger" disabled>Delete</button>
+                }
+            </div>
+        </div>
+    </div>
+    @Html.ActionLink("Go back to Job Offers", "Index", "JobOffer", null, new { @class = "btn btn-primary", disabled = "disabled" })
+
+
+</div>
