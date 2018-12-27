@@ -80,3 +80,16 @@ td.pagesSwitchContent span a {
 td.pagesSwitchContent {
     text-align: right;
 }
+
+
+
+
+/* JQuery Validation classes */
+.js-invalid {
+    color: red;
+    margin-top: 7px; 
+}
+
+.js-success {
+    border-color: green;
+}

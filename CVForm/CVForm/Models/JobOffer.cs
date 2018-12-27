@@ -15,6 +15,7 @@ namespace CVForm.Models
         [Display(Name = "Job title")]
         [Required]
         public string JobTitle { get; set; }
+        [Required]
         public virtual Company Company { get; set; }
         public virtual int CompanyId { get; set; }
         [Display(Name = "Salary from")]
@@ -24,6 +25,7 @@ namespace CVForm.Models
         [DataType(DataType.Date)]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyy-MM-dd}")]
         public DateTime Created { get; set; }
+        [Required]
         public string Location { get; set; }
         [Required]
         [MinLength(20)]

@@ -3,11 +3,14 @@
 @{
     ViewData["Title"] = "Create";
 }
+<script src="@Url.Content("~/lib/jquery-validation/dist/jquery.validate.js")"></script>
 
+<script src="@Url.Content("~/lib/jquery-validation/dist/additional-methods.js")"></script>
+<script src="@Url.Content("~/js/validation.js")"></script>
 <div class="row page-box">
     <div class="col-sm-12">
         <h2>Now Job Offer</h2>
-        @using (Html.BeginForm("Create"))
+        @using (Html.BeginForm("Create", "JobOffer", FormMethod.Post, new { id = "jobOfferForm" }))
         {
             @*@Html.AntiForgeryToken()*@
             <div class="form-group">
@@ -28,7 +31,7 @@
                 @Html.ValidationMessageFor(m => m.Location, "", new { @class = "text-danger" })
             </div>
             <div class="form-group">
-                @Html.LabelFor(m => m.SalaryFrom, "Salary")
+                @Html.LabelFor(m => m.SalaryFrom)
                 <div class="input-group">
                     <span class="input-group-addon">PLN</span>
                     @Html.EditorFor(m => m.SalaryFrom, new { htmlAttributes = new { @class = "form-control", placeholder = "From" } })
@@ -37,7 +40,7 @@
                 @Html.ValidationMessageFor(m => m.SalaryFrom, "", new { @class = "text-danger" })
             </div>
             <div class="form-group">
-                @Html.LabelFor(m => m.SalaryTo, "Salary")
+                @Html.LabelFor(m => m.SalaryTo)
                 <div class="input-group">
                     <span class="input-group-addon">PLN</span>
                     @Html.EditorFor(m => m.SalaryTo, new { htmlAttributes = new { @class = "form-control", placeholder = "To" } })

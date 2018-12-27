@@ -6,10 +6,12 @@
     <title>@ViewData["Title"] - CVForm</title>
 
     <environment include="Development">
-
+        @* ToDo: Clean up links - put as many as possible in one place. SOME LINKS NEED TO BE BEFORE OTHERS - e.g. validation!*@
+        <script src="~/lib/jquery/dist/jquery.js"></script>
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
-        <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.0.3.min.js"></script>
         <link rel="stylesheet" href="~/css/site.css" />
+
+
     </environment>
     <environment exclude="Development">
         <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/css/bootstrap.min.css"
@@ -53,7 +55,6 @@
     </div>
 
     <environment include="Development">
-        <script src="~/lib/jquery/dist/jquery.js"></script>
         <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
         <script src="~/js/site.js" asp-append-version="true"></script>
     </environment>

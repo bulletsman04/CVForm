@@ -20,6 +20,7 @@
     
         <div id="offers-table-container container col-sm-12">
             <table class="table table-striped table-hover">
+                @* //ToDo: correct color locally and incorrect on azure *@
                 <thead class="thead-dark">
                 <tr>
                     <th scope="col">Job Title</th>
@@ -29,7 +30,7 @@
                 </tr>
                 </thead>
                 <tbody id="offers">
-                @*ToDo:aktualnie zapytanie ajax - był problem z rozszerzaniem tabeli*@ 
+                @*ToDo:aktualnie zapytanie ajax - był problem z rozszerzaniem tabeli*@
                 @*@foreach (var offer in Model.OrderBy(o => o.Created))
                 {
                     <tr>
