@@ -30,6 +30,7 @@ namespace CVForm.Controllers
         /// <returns>All job offers</returns>
 
         //[HttpGet("{pageNumber}/{searchString}")]
+        [HttpGet]
         public ActionResult<List<JobOffer>> OffersSearch(int pageNumber = 1, string searchString="")
         {
             // ToDo: Maybe divide again to two actions and extract common paging functionality

@@ -102,11 +102,7 @@ namespace CVForm
             app.UseSession();
             app.UseAuthentication();
 
-            app.UseSwagger();
-            app.UseSwaggerUI(c =>
-            {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Swagger XML Api v1");
-            });
+         
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
@@ -118,6 +114,13 @@ namespace CVForm
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Swagger XML Api v1");
+            });
+
         }
     }
 }

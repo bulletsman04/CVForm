@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using CVForm.EntityFramework;
 using CVForm.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.WindowsAzure.Storage;
+using Microsoft.WindowsAzure.Storage.Blob;
 
 namespace CVForm.Controllers
 {
@@ -18,7 +20,7 @@ namespace CVForm.Controllers
         }
         public async Task<ActionResult> Index(int id)
         {
-            var jobApplication = new JobApplication()
+            var jobApplication = new JobApplicationViewModel()
             {
                 OfferId = id
             };
@@ -27,12 +29,40 @@ namespace CVForm.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Index(JobApplication model)
+        public async Task<IActionResult> Index(JobApplicationViewModel model)
         {
+            //ToDo: Accept only pdf
             if (!ModelState.IsValid)
             {
                return View(model);
             }
+
+            
+            string connectionString = "DefaultEndpointsProtocol=https;AccountName=cvformimages;AccountKey=yRoTlVbxbqcGUqzVd6WNxursP+Pro9tHn4ysi7jAoGwsNHx2ORWx2RQStHCxR1IX+qD2niKmGVYFlJHu79CbMA==;EndpointSuffix=core.windows.net";
+
+            string cvFileName = "";
+            CloudStorageAccount storageAccount = null;
+            if (CloudStorageAccount.TryParse(connectionString, out storageAccount))
+            {
+                CloudBlobClient cloudBlobClient = storageAccount.CreateCloudBlobClient();
+
+                // Get reference to the blob container by passing the name by reading the value from the configuration (appsettings.json)
+                CloudBlobContainer container = cloudBlobClient.GetContainerReference("applications");
+                //await container.CreateIfNotExistsAsync();
+
+                // Get the reference to the block blob from the container
+                CloudBlockBlob blockBlob = container.GetBlockBlobReference(model.CvFile.FileName);
+
+                // Upload the file
+                using (var stream = model.CvFile.OpenReadStream())
+                {
+                    await blockBlob.UploadFromStreamAsync(stream);
+                }
+
+                cvFileName = blockBlob.Uri.AbsoluteUri;
+            }
+
+
 
             JobApplication jobApplication =  new JobApplication()
             {
@@ -41,8 +71,11 @@ namespace CVForm.Controllers
                 EmailAddress = model.EmailAddress,
                 PhoneNumber = model.PhoneNumber,
                 ContactAgreement = model.ContactAgreement,
-                OfferId = model.OfferId
+                OfferId = model.OfferId,
+                CvUrl = cvFileName
             };
+
+
 
             _context.JobApplications.Add(jobApplication);
             await _context.SaveChangesAsync();
