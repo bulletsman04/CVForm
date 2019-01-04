@@ -85,6 +85,10 @@ td.pagesSwitchContent {
     margin-top: 5px;
 }
 
+.search-box .btn {
+    margin-top: 0; 
+}
+
 
 /* JQuery Validation classes */
 .js-invalid {

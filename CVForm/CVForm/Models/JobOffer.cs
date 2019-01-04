@@ -15,7 +15,7 @@ namespace CVForm.Models
         [Display(Name = "Job title")]
         [Required]
         public string JobTitle { get; set; }
-        [Required]
+
         public virtual Company Company { get; set; }
         public virtual int CompanyId { get; set; }
         [Display(Name = "Salary from")]

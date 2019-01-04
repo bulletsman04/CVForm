@@ -10,13 +10,7 @@
             </summary>
             <returns>All job offers</returns>
         </member>
-        <member name="M:CVForm.Controllers.JobOffersApiController.Offers">
-            <summary>
-            Gets all the job offers
-            </summary>
-            <returns>All job offers</returns>
-        </member>
-        <member name="M:CVForm.Controllers.JobOffersApiController.OffersSearch(System.String)">
+        <member name="M:CVForm.Controllers.JobOffersApiController.OffersSearch(System.Int32,System.String)">
             <summary>
             Gets all the job offers
             </summary>
