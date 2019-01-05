@@ -1,10 +1,17 @@
 ﻿@* ToDo: Some title, like "Preview Title" *@
+<div class="row">
+    <div class="col-sm-12 no-padding">
+        <h3 class="preview-title">Job offer preview</h3>
+        <hr/>
+    </div>
+</div>
+
 <div class="row page-box">
-    <h1 data-bind='text: jobTitle'></h1>
+    <h4 data-bind='text: jobTitle' class="preview-offer-title"></h4>
     <div class="col-sm-8">
         @* ToDo: Description trim *@
         <div class="offer-description" id="previewMarkdown">
-            <span data-bind='text: description'></span>
+            <span class="span-offer-descitpion" data-bind='text: description'></span>
         </div>
     </div>
     <div class="col-sm-4">

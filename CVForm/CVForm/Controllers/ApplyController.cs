@@ -46,6 +46,8 @@ namespace CVForm.Controllers
             {
                 CloudBlobClient cloudBlobClient = storageAccount.CreateCloudBlobClient();
 
+                //ToDo: Better name and then change in flow to display appriopriately in sharepoint
+                //TODO: take to appsettings.json
                 // Get reference to the blob container by passing the name by reading the value from the configuration (appsettings.json)
                 CloudBlobContainer container = cloudBlobClient.GetContainerReference("applications");
                 //await container.CreateIfNotExistsAsync();

@@ -13,7 +13,7 @@
         @* ToDo: Prepare the same validation on database (mostly done), server (not done) and jquery (mostly done) *@
         @using (Html.BeginForm("Create", "JobOffer", FormMethod.Post, new { id = "jobOfferForm" }))
         {
-            @*@Html.AntiForgeryToken()*@
+            @Html.AntiForgeryToken()
             <div class="form-group">
                 @Html.LabelFor(m => m.JobTitle)
                 @Html.EditorFor(m => m.JobTitle, new { htmlAttributes = new { @class = "form-control", data_bind = "value:jobTitle" } })

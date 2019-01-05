@@ -39,9 +39,12 @@ namespace CVForm.Controllers
         {
             JobOffer selected = _context.JobOfers.Include(item => item.Company).Include(item => item.JobApplications).FirstOrDefault(item => item.ID == id);
 
+            if (selected == null)
+                return new HttpStatusCodeResult(HttpStatusCode.NotFound);
             return View(selected);
         }
 
+        [HttpGet]
         public IActionResult Edit(int? id)
         {
             if (id == null)
@@ -51,20 +54,42 @@ namespace CVForm.Controllers
             if (offer == null)
                 return new HttpStatusCodeResult(HttpStatusCode.NotFound);
 
-            return View(offer);
+
+            var offerEditView = new JobOfferCreateView()
+            {
+                ID = offer.ID,
+                CompanyId = offer.CompanyId,
+                Description = offer.Description,
+                Location = offer.Location,
+                SalaryFrom = offer.SalaryFrom,
+                JobTitle = offer.JobTitle,
+                SalaryTo = offer.SalaryTo,
+                ValidUntil = offer.ValidUntil,
+                Created = offer.Created,
+                Company = offer.Company,
+                Companies = _context.Companies.ToList()
+        };
+
+            return View(offerEditView);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(JobOffer model)
+        public async Task<IActionResult> Edit(JobOfferCreateView model)
         {
             if (!ModelState.IsValid)
                 return View();
             var offer = _context.JobOfers.FirstOrDefault(item => item.ID == model.ID);
             if (offer != null)
             {
-                offer.JobTitle = model.JobTitle;
+                offer.CompanyId = model.CompanyId;
                 offer.Description = model.Description;
+                offer.JobTitle = model.JobTitle;
+                offer.Location = model.Location;
+                offer.SalaryFrom = model.SalaryFrom;
+                offer.SalaryTo = model.SalaryTo;
+                offer.ValidUntil = model.ValidUntil;
+                
                 await _context.SaveChangesAsync();
             }
             return RedirectToAction("Details", new {id = model.ID});

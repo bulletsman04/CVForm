@@ -23,7 +23,8 @@
         this.created = ko.computed(function () {
 
             //ToDO: Change - but firstly extract globl function for parsing date of this type
-            return new Date();
+            var date = new Date();
+            return date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
         }, this);
 
         this.companyName = ko.computed(function () {
