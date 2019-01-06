@@ -17,7 +17,6 @@ variables:
 steps:
 - script: |
     dotnet build CVForm/CVForm/CVForm.csproj --configuration $(buildConfiguration)
-    dotnet publish --configuration $(buildConfiguration) --output $BUILD_ARTIFACTSTAGINGDIRECTORY
 
 - task: DotNetCoreInstaller@0
   inputs:
