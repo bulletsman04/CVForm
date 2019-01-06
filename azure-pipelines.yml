@@ -18,10 +18,6 @@ steps:
 - script: |
     dotnet build CVForm/CVForm/CVForm.csproj --configuration $(buildConfiguration)
 
-- task: DotNetCoreInstaller@0
-  inputs:
-    version: '2.1'
-
 - task: PublishBuildArtifacts@1
 
 - task: DotNetCoreCLI@2
