@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using CVForm.EntityFramework;
 using CVForm.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Blob;
 
@@ -13,10 +14,11 @@ namespace CVForm.Controllers
     public class ApplyController : Controller
     {
         private readonly DataContext _context;
-
-        public ApplyController(DataContext context)
+        private IConfiguration _configuration;
+        public ApplyController(DataContext context, IConfiguration Configuration)
         {
             _context = context;
+            _configuration = Configuration;
         }
         public async Task<ActionResult> Index(int id)
         {
@@ -38,20 +40,19 @@ namespace CVForm.Controllers
             }
 
             
-            string connectionString = "DefaultEndpointsProtocol=https;AccountName=cvformimages;AccountKey=yRoTlVbxbqcGUqzVd6WNxursP+Pro9tHn4ysi7jAoGwsNHx2ORWx2RQStHCxR1IX+qD2niKmGVYFlJHu79CbMA==;EndpointSuffix=core.windows.net";
 
             string cvFileName = "";
             CloudStorageAccount storageAccount = null;
-            if (CloudStorageAccount.TryParse(connectionString, out storageAccount))
+            if (CloudStorageAccount.TryParse(_configuration["ConnectionStrings:BlobStorage"], out storageAccount))
             {
                 CloudBlobClient cloudBlobClient = storageAccount.CreateCloudBlobClient();
 
-                //ToDo: Better name and then change in flow to display appriopriately in sharepoint
-                //TODO: take to appsettings.json
+               
                 // Get reference to the blob container by passing the name by reading the value from the configuration (appsettings.json)
-                CloudBlobContainer container = cloudBlobClient.GetContainerReference("applications");
+                CloudBlobContainer container = cloudBlobClient.GetContainerReference(_configuration["OtherStrings:BlobContainerReference"]);
                 //await container.CreateIfNotExistsAsync();
 
+                //ToDo: Better name and then change in flow to display appriopriately in sharepoint - firstly logged user id?
                 // Get the reference to the block blob from the container
                 CloudBlockBlob blockBlob = container.GetBlockBlobReference(model.CvFile.FileName);
 

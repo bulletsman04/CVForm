@@ -23,7 +23,14 @@ function getOffers(searchString, currentPage) {
     $('#offers').prepend($loading);
 
     var uri = 'api/joboffersapi';
-    $.getJSON(uri, { pageNumber: currentPage, searchString : searchString })
+
+    if (searchString !== "") {
+        uri += '/' + searchString;
+    }
+
+    uri += '/' + currentPage;
+
+    $.getJSON(uri)
     //ToDO: maybe change for success callback; searchstring as data?
         .done(function (data) {
 

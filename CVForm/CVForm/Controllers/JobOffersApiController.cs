@@ -22,24 +22,39 @@ namespace CVForm.Controllers
             _context = context;
         }
 
-
-
         /// <summary>
         /// Gets all the job offers
         /// </summary>
         /// <returns>All job offers</returns>
-
-        //[HttpGet("{pageNumber}/{searchString}")]
-        [HttpGet]
-        public ActionResult<List<JobOffer>> OffersSearch(int pageNumber = 1, string searchString="")
+        [HttpGet("{pageNumber}")]
+        public ActionResult<List<JobOffer>> GetAll(int pageNumber = 1)
         {
-            // ToDo: Maybe divide again to two actions and extract common paging functionality
+            PagingViewModel pagedOffers = PreparePagingViewModel(pageNumber);
 
+            return Ok(pagedOffers);
+        }
+
+        /// <summary>
+        /// Gets all the job offers that have searchString in name
+        /// </summary>
+        /// <returns>All job offers</returns>
+        [HttpGet("{searchString}/{pageNumber}")]
+        public ActionResult<List<JobOffer>> OffersSearch(string searchString, int pageNumber = 1)
+        {
             List<JobOffer> searchResult = _context.JobOfers.Include(item => item.Company).ToList();
             if (!String.IsNullOrEmpty(searchString))
             {
                 searchResult = searchResult.FindAll(item => item.JobTitle.Contains(searchString)).ToList();
             }
+
+            PagingViewModel pagedOffers = PreparePagingViewModel(pageNumber);
+
+            return Ok(pagedOffers);
+        }
+
+        private PagingViewModel PreparePagingViewModel(int pageNumber)
+        {
+            List<JobOffer> searchResult = _context.JobOfers.Include(item => item.Company).ToList();
 
             int totalPage, totalRecord, pageSize;
             pageSize = 4;
@@ -53,8 +68,8 @@ namespace CVForm.Controllers
                 Offers = searchResult,
                 TotalPage = totalPage
             };
-
-            return Ok(pagedOffers);
+            return pagedOffers;
         }
+
     }
 }
