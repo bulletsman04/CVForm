@@ -22,26 +22,14 @@ namespace CVForm.Controllers
             _configuration = Configuration;
             AppSettings = _configuration.GetSection("AppSettings").Get<AppSettings>();
         }
-        public IActionResult Index()
-        {
-            return View();
-        }
-
+    
         public IActionResult About()
         {
             ViewData["Message"] = "Your application description page.";
 
             return View();
         }
-       
-        public async Task<IActionResult> Contact()
-        {
-          
-
-            ViewData["Message"] = "Your contact page.";
-             
-            return View();
-        }
+   
 
         public IActionResult Privacy()
         {

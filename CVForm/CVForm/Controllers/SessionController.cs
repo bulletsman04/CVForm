@@ -23,7 +23,7 @@ namespace CVForm.Controllers
         [HttpGet]
         public IActionResult SignIn()
         {
-            var redirectUrl = Url.Action(nameof(HomeController.Index), "Home");
+            var redirectUrl = Url.Action(nameof(JobOfferController.Index), "JobOffer");
             return Challenge(
                 new AuthenticationProperties { RedirectUri = redirectUrl },
                 OpenIdConnectDefaults.AuthenticationScheme);
@@ -32,7 +32,7 @@ namespace CVForm.Controllers
         [HttpGet]
         public IActionResult ResetPassword()
         {
-            var redirectUrl = Url.Action(nameof(HomeController.Index), "Home");
+            var redirectUrl = Url.Action(nameof(JobOfferController.Index), "JobOffer");
             var properties = new AuthenticationProperties { RedirectUri = redirectUrl };
             properties.Items[AzureAdB2COptions.PolicyAuthenticationProperty] = AzureAdB2COptions.ResetPasswordPolicyId;
             return Challenge(properties, OpenIdConnectDefaults.AuthenticationScheme);
@@ -41,7 +41,7 @@ namespace CVForm.Controllers
         [HttpGet]
         public IActionResult EditProfile()
         {
-            var redirectUrl = Url.Action(nameof(HomeController.Index), "Home");
+            var redirectUrl = Url.Action(nameof(JobOfferController.Index), "JobOffer");
             var properties = new AuthenticationProperties { RedirectUri = redirectUrl };
             properties.Items[AzureAdB2COptions.PolicyAuthenticationProperty] = AzureAdB2COptions.EditProfilePolicyId;
             return Challenge(properties, OpenIdConnectDefaults.AuthenticationScheme);
@@ -61,7 +61,7 @@ namespace CVForm.Controllers
             if (User.Identity.IsAuthenticated)
             {
                 // Redirect to home page if the user is authenticated.
-                return RedirectToAction(nameof(HomeController.Index), "Home");
+                return RedirectToAction(nameof(JobOfferController.Index), "JobOffer");
             }
 
             return View();

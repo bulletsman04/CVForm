@@ -38,9 +38,7 @@ namespace CVForm.Controllers
             {
                return View(model);
             }
-
             
-
             string cvFileName = "";
             CloudStorageAccount storageAccount = null;
             if (CloudStorageAccount.TryParse(_configuration["ConnectionStrings:BlobStorage"], out storageAccount))

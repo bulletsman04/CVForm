@@ -111,7 +111,7 @@ namespace CVForm
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                    template: "{controller=JobOffer}/{action=Index}");
             });
 
             app.UseSwagger();

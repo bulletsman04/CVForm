@@ -32,16 +32,11 @@ namespace CVForm.Controllers
 
 
         [Authorize]
-        public IActionResult Index(string searchString)
+        public IActionResult Index()
         {
-            List<JobOffer> searchResult = _context.JobOfers.Include(item => item.Company).ToList();
-            if (String.IsNullOrEmpty(searchString))
-                return View(searchResult);
-
-             searchResult = searchResult.FindAll(item => item.JobTitle.Contains(searchString)).ToList();
-            return View(searchResult);
+            return View();
         }
-
+        [HttpGet("[controller]/Details/{id?}")]
         public IActionResult Details(int? id)
         {
             JobOffer selected = _context.JobOfers.Include(item => item.Company).Include(item => item.JobApplications).FirstOrDefault(item => item.ID == id);
@@ -52,7 +47,7 @@ namespace CVForm.Controllers
         }
 
         [Authorize]
-        [HttpGet]
+        [HttpGet("[controller]/Edit/{id?}")]
         public async Task<IActionResult> Edit(int? id)
         {
             AADGraph graph = new AADGraph(AppSettings);
