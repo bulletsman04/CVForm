@@ -55,8 +55,7 @@ namespace CVForm
             services.AddDistributedMemoryCache();
             services.AddSession();
 
-
-            // ToDo: FInish APi documentation
+            
             services.AddSwaggerGen(c =>
             {
                 //The generated Swagger JSON file will have these properties.

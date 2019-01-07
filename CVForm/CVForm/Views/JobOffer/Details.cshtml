@@ -38,13 +38,13 @@
             }
             <div>
                 <label>Created:</label>
-                <span id="created">@Model.Created</span>
+                <span id="created">@Model.Created.Date.ToShortDateString()</span>
             </div>
             @if (Model.ValidUntil.HasValue)
             {
                 <div>
                     <label>Valid:</label>
-                    <span id="valid">@Model.ValidUntil.Value.Subtract(DateTime.Now).Days days (@Model.ValidUntil)</span>
+                    <span id="valid">@Model.ValidUntil.Value.Subtract(DateTime.Now).Days days (@Model.ValidUntil.Value.Date.ToShortDateString())</span>
                 </div>
             }
             <div>

@@ -21,10 +21,20 @@
         }, this);
 
         this.created = ko.computed(function () {
-
-            //ToDO: Change - but firstly extract globl function for parsing date of this type
             var date = new Date();
-            return date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
+            return parseDate(date);
+         
+        }, this);
+
+
+        this.validUntilParsed= ko.computed(function () {
+            var inputDate = new Date(this.validUntil());
+
+            if (this.validUntil() === undefined)
+                return "";
+
+            return "(" + parseDate(inputDate) + ")";
+         
         }, this);
 
         this.companyName = ko.computed(function () {

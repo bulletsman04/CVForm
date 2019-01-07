@@ -10,7 +10,6 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CVForm.Controllers
 {
-    [Route("api/[controller]/[action]")]
     [Route("api/[controller]")]
     [ApiController]
     public class JobOffersApiController : ControllerBase
@@ -25,7 +24,8 @@ namespace CVForm.Controllers
         /// <summary>
         /// Gets all the job offers
         /// </summary>
-        /// <returns>All job offers</returns>
+        /// <param name="pageNumber">Number of page user wants to see</param>
+        /// <returns></returns>
         [HttpGet("{pageNumber}")]
         public ActionResult<List<JobOffer>> GetAll(int pageNumber = 1)
         {
@@ -37,7 +37,9 @@ namespace CVForm.Controllers
         /// <summary>
         /// Gets all the job offers that have searchString in name
         /// </summary>
-        /// <returns>All job offers</returns>
+        /// <param name="searchString">String used to select appropriate offers</param>
+        /// <param name="pageNumber">Number of page user wants to see</param>
+        /// <returns></returns>
         [HttpGet("{searchString}/{pageNumber}")]
         public ActionResult<List<JobOffer>> OffersSearch(string searchString, int pageNumber = 1)
         {

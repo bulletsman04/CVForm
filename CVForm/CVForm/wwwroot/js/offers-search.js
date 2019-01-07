@@ -31,7 +31,6 @@ function getOffers(searchString, currentPage) {
     uri += '/' + currentPage;
 
     $.getJSON(uri)
-    //ToDO: maybe change for success callback; searchstring as data?
         .done(function (data) {
 
             $('#offers').empty();
@@ -40,7 +39,7 @@ function getOffers(searchString, currentPage) {
                 function (key, offer) {
                     // ToDO: albo dodać '0' do miesiaca i wyłączyć funkcję albo użyć jakiejś biblioteki.
                     var date = new Date(offer.created);
-                    var dateString = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
+                    var dateString = parseDate(date);
 
                     $('<tr>' +
                         '<td><a href="/JobOffer/Details/' + offer.id + '">' +

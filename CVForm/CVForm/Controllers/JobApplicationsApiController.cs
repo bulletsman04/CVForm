@@ -21,9 +21,10 @@ namespace CVForm.Controllers
             _context = context;
         }
         /// <summary>
-        /// Gets all the job offers
+        /// Gets all job applications for the offer
         /// </summary>
-        /// <returns>All job offers</returns>
+        /// <param name="offerId">Id of the offer</param>
+        /// <returns></returns>
         [HttpGet("{offerId}")]
         public ActionResult<List<JobApplication>> OffersSearch(int offerId)
         {
