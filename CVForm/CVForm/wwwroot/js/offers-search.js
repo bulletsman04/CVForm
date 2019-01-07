@@ -37,7 +37,6 @@ function getOffers(searchString, currentPage) {
 
             $.each(data.offers,
                 function (key, offer) {
-                    // ToDO: albo dodać '0' do miesiaca i wyłączyć funkcję albo użyć jakiejś biblioteki.
                     var date = new Date(offer.created);
                     var dateString = parseDate(date);
 

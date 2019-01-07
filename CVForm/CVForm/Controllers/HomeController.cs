@@ -33,19 +33,10 @@ namespace CVForm.Controllers
 
             return View();
         }
-        //[Authorize]
+       
         public async Task<IActionResult> Contact()
         {
-            AADGraph graph = new AADGraph(AppSettings);
-            string groupName = "Admins";
-            string groupId = AppSettings.AADGroups.FirstOrDefault(g =>
-                String.Compare(g.Name, groupName) == 0).Id;
-            bool isIngroup = await graph.IsUserInGroup(User.Claims, groupId);
-
-            if (!isIngroup)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
+          
 
             ViewData["Message"] = "Your contact page.";
              

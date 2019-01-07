@@ -4,12 +4,15 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
+using CommunityCertForT;
+using CommunityCertForT.Helpers;
 using CVForm.EntityFramework;
 using CVForm.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Internal;
+using Microsoft.Extensions.Configuration;
 
 namespace CVForm.Controllers
 {
@@ -17,14 +20,18 @@ namespace CVForm.Controllers
     public class JobOfferController : Controller
     {
         private readonly DataContext _context;
+        private IConfiguration _configuration;
+        private AppSettings AppSettings { get; set; }
 
-        public JobOfferController(DataContext context)
+        public JobOfferController(DataContext context,IConfiguration configuration)
         {
+            _configuration = configuration;
+            AppSettings = _configuration.GetSection("AppSettings").Get<AppSettings>();
             _context = context;
         }
 
 
-        //[Authorize]
+        [Authorize]
         public IActionResult Index(string searchString)
         {
             List<JobOffer> searchResult = _context.JobOfers.Include(item => item.Company).ToList();
@@ -44,9 +51,22 @@ namespace CVForm.Controllers
             return View(selected);
         }
 
+        [Authorize]
         [HttpGet]
-        public IActionResult Edit(int? id)
+        public async Task<IActionResult> Edit(int? id)
         {
+            AADGraph graph = new AADGraph(AppSettings);
+            string groupName = "Admins";
+            string groupId = AppSettings.AADGroups.FirstOrDefault(g =>
+                String.Compare(g.Name, groupName) == 0).Id;
+            bool isIngroup = await graph.IsUserInGroup(User.Claims, groupId);
+
+            if (!isIngroup)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
+            }
+
+
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             var offer = _context.JobOfers.Include(item => item.Company).FirstOrDefault(item => item.ID == id);
