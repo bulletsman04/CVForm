@@ -16,7 +16,6 @@ variables:
 
 steps:
 - script: |
-    dotnet build CVForm/CVForm/CVForm.csproj --configuration $(buildConfiguration)
-    dotnet publish CVForm/CVForm/CVForm.csproj --output $(Build.ArtifactStagingDirectory)
+    dotnet publish CVForm/CVForm/CVForm.csproj --configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)
 
 - task: PublishBuildArtifacts@1
