@@ -3,6 +3,8 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
     <UserSecretsId>1ec9e513-0f7b-47a0-9055-e3f13f7d1bd6</UserSecretsId>
+    <ApplicationInsightsResourceId>/subscriptions/dbcd2133-7fcc-42fc-8076-fd6da04ffc61/resourcegroups/JobOfferApplication/providers/microsoft.insights/components/AppInsightswebSitedj566vg2lpxza</ApplicationInsightsResourceId>
+    <ApplicationInsightsAnnotationResourceId>/subscriptions/dbcd2133-7fcc-42fc-8076-fd6da04ffc61/resourcegroups/JobOfferApplication/providers/microsoft.insights/components/AppInsightswebSitedj566vg2lpxza</ApplicationInsightsAnnotationResourceId>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -18,6 +20,7 @@
     <PackageReference Include="Bower" Version="1.3.11" />
     <PackageReference Include="FontAwesome" Version="4.7.0" />
     <PackageReference Include="jQuery.Validation" Version="1.17.0" />
+    <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.1.1" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.Identity.Client" Version="2.5.0-preview" />
     <PackageReference Include="Microsoft.IdentityModel.Clients.ActiveDirectory" Version="4.4.1" />
@@ -39,6 +42,10 @@
     <Content Update="Views\Companies\Index.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services" />
   </ItemGroup>
 
 </Project>
