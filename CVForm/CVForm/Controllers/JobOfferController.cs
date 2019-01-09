@@ -157,7 +157,7 @@ namespace CVForm.Controllers
                 ValidUntil = model.ValidUntil,
                 Created = DateTime.Now
             };
-            // jquery validate ; IValidable object
+            //  IValidable object
             try
             {
                 _context.JobOfers.Add(jobOffer);

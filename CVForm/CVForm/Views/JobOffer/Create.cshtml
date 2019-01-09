@@ -10,10 +10,9 @@
 <div class="row page-box">
     <div class="col-sm-7">
         <h2>Now Job Offer</h2>
-        @* ToDo: Prepare the same validation on database (mostly done), server (not done) and jquery (mostly done) *@
         @using (Html.BeginForm("Create", "JobOffer", FormMethod.Post, new { id = "jobOfferForm" }))
         {
-            @Html.AntiForgeryToken()
+           
             <div class="form-group">
                 @Html.LabelFor(m => m.JobTitle)
                 @Html.EditorFor(m => m.JobTitle, new { htmlAttributes = new { @class = "form-control", data_bind = "value:jobTitle" } })
@@ -64,6 +63,7 @@
                 @Html.TextAreaFor(m => m.Description, new { @class = "form-control", placeholder = "Enter description", data_bind = "value:description" })
                 @Html.ValidationMessageFor(m => m.Description, "", new { @class = "text-danger" })
             </div>
+            @Html.AntiForgeryToken()
             <div class="form-group">
                 <button type="submit" class="btn btn-primary">Create</button>
             </div>
@@ -74,5 +74,6 @@
     </div>
     
     <script src="~/lib/knockout/knockout-debug.js"></script>
+    @* ToDo: Because of knockout values are reseted after server form validation *@
     <script src="~/js/joboffer_knockout.js"></script>
 </div>
