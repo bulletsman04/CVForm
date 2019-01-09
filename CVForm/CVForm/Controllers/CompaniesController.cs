@@ -39,9 +39,31 @@ namespace CVForm.Controllers
         public async Task<IActionResult> Edit(Company model)
         {
             if (!ModelState.IsValid)
-                return View();
+            {
+                return View(model);
+            }
             var offer = _context.Companies.FirstOrDefault(item => item.ID == model.ID);
             offer.Name = model.Name;
+            await _context.SaveChangesAsync();
+            return RedirectToAction("Index");
+        }
+
+        public IActionResult Create()
+        {
+            
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create(Company model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            _context.Companies.Add(model);
             await _context.SaveChangesAsync();
             return RedirectToAction("Index");
         }
