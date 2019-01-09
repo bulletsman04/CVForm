@@ -29,7 +29,9 @@ namespace CVForm.Controllers
         [HttpGet("{pageNumber}")]
         public ActionResult<List<JobOffer>> GetAll(int pageNumber = 1)
         {
-            PagingViewModel pagedOffers = PreparePagingViewModel(pageNumber);
+            List<JobOffer> searchResult = _context.JobOfers.Include(item => item.Company).ToList();
+
+            PagingViewModel pagedOffers = PreparePagingViewModel(pageNumber,searchResult);
 
             return Ok(pagedOffers);
         }
@@ -49,14 +51,14 @@ namespace CVForm.Controllers
                 searchResult = searchResult.FindAll(item => item.JobTitle.Contains(searchString)).ToList();
             }
 
-            PagingViewModel pagedOffers = PreparePagingViewModel(pageNumber);
+            PagingViewModel pagedOffers = PreparePagingViewModel(pageNumber,searchResult);
 
             return Ok(pagedOffers);
         }
 
-        private PagingViewModel PreparePagingViewModel(int pageNumber)
+        private PagingViewModel PreparePagingViewModel(int pageNumber, List<JobOffer> searchResult)
         {
-            List<JobOffer> searchResult = _context.JobOfers.Include(item => item.Company).ToList();
+           
 
             int totalPage, totalRecord, pageSize;
             pageSize = 4;
