@@ -12,20 +12,21 @@ namespace CVForm.Models
         // ToDO: TU nazwaliśmy niezgodnie z koncepcją, więc EF utwórzył FK do JobOfeer o nazwie JobOfferId
         public int OfferId { get; set; }
         [Required]
-        [Display(Name = "First name")]
+        [Display(Name = "First name: ")]
         public string FirstName { get; set; }
         [Required]
-        [Display(Name = "Last name")]
+        [Display(Name = "Last name: ")]
         public string LastName { get; set; }
         [Required]
-        [Display(Name = "Phone number")]
+        [Display(Name = "Phone number: ")]
         public string PhoneNumber { get; set; }
         [Required]
-        [Display(Name = "Email address")]
+        [Display(Name = "Email address: ")]
         public string EmailAddress { get; set; }
         [Required]
-        [Display(Name = "Contact agreement")]
+        [Display(Name = "Contact agreement: ")]
         public bool ContactAgreement { get; set; }
+        [Display(Name = "Link to CV: ")]
         public string CvUrl { get; set; }
     }
 }

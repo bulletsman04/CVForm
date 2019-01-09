@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using CVForm.EntityFramework;
 using CVForm.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Blob;
@@ -13,10 +15,12 @@ namespace CVForm.Controllers
 {
     public class ApplyController : Controller
     {
+        
         private readonly DataContext _context;
         private IConfiguration _configuration;
         public ApplyController(DataContext context, IConfiguration Configuration)
         {
+            
             _context = context;
             _configuration = Configuration;
         }
@@ -87,7 +91,27 @@ namespace CVForm.Controllers
         {
             var application = _context.JobApplications.FirstOrDefault(item => item.Id == applicationId);
 
-            return View(application);
+            if (application == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.NotFound);
+            }
+
+            JobAppicationDetailsViewModel jobAppicationDetailsViewModel = new JobAppicationDetailsViewModel()
+            {
+                FirstName = application.FirstName,
+                LastName = application.LastName,
+                EmailAddress = application.EmailAddress,
+                ContactAgreement = application.ContactAgreement,
+                CvUrl = application.CvUrl,
+                Id = applicationId,
+                OfferId = application.OfferId,
+                PhoneNumber = application.PhoneNumber,
+                JobOffer = _context.JobOfers.Include(item => item.Company).FirstOrDefault(item => item.ID == offerId)
+            };
+
+
+
+            return View(jobAppicationDetailsViewModel);
         }
     }
 }

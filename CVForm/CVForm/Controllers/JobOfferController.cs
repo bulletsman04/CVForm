@@ -50,6 +50,7 @@ namespace CVForm.Controllers
         [HttpGet("[controller]/Edit/{id?}")]
         public async Task<IActionResult> Edit(int? id)
         {
+            
             AADGraph graph = new AADGraph(AppSettings);
             string groupName = "Admins";
             string groupId = AppSettings.AADGroups.FirstOrDefault(g =>

@@ -1,30 +1,87 @@
-﻿@model JobApplication
+﻿@model JobAppicationDetailsViewModel
 @{
     ViewData["Title"] = "Details";
 }
 
 <div class="row page-box">
-    <h1>@Model.FirstName @Model.LastName</h1>
+
+    @**@
     <div class="col-sm-8">
-        <div class="offer-description" id="previewMarkdown">
-           ...
-        </div>
-    </div>
-    <div class="col-sm-4">
+        <h1>Job application #@Model.Id</h1>
         <div class="offer-details">
             <div>
-                <label>Email address: </label>
+                @Html.LabelFor(m => m.FirstName)
+                <span>@Model.FirstName</span>
+            </div>
+            <div>
+                @Html.LabelFor(m => m.LastName)
+                <span>@Model.LastName</span>
+            </div>
+            <div>
+                @Html.LabelFor(m => m.EmailAddress)
                 <span>@Model.EmailAddress</span>
             </div>
             <div>
-                <label>@Model.PhoneNumber: </label>
+                @Html.LabelFor(m => m.PhoneNumber)
                 <span>@Model.PhoneNumber</span>
             </div>
             <div>
-                <label>@Model.CvUrl: </label>
-                <span>@Model.CvUrl</span>
+                @Html.LabelFor(m => m.ContactAgreement)
+                <span>@(Model.ContactAgreement? "Yes" : "No")</span>
+            </div>
+            <div>
+                @Html.LabelFor(m => m.CvUrl)
+                <a href="@Model.CvUrl">@Model.CvUrl</a>
             </div>
         </div>
     </div>
+    <div class="col-sm-4">
+        <h1>Job offer details</h1>
+      
+        <div class="offer-details">
+            <div class="offer-title" >
+                <label>Title:</label>
+                <span>@Model.JobOffer.JobTitle</span>
+            </div>
+            <div class="offer-description" >
+                <label>Description:</label>
+                <span class="span-offer-descitpion">@Model.JobOffer.Description</span>
+            </div>
+            <span id="offer-id" hidden="hidden">@Model.JobOffer.ID</span>
+            <div>
+                <label>Company:</label>
+                <span id="company">@Model.JobOffer.Company.Name</span>
+            </div>
+            <div>
+                <label>Location:</label>
+                <span id="location">@Model.JobOffer.Location</span>
+            </div>
+            @if (Model.JobOffer.SalaryFrom.HasValue)
+            {
+                <div>
+                    <label>Salary from:</label>
+                    <span id="salaryFrom">@Model.JobOffer.SalaryFrom (PLN)</span>
+                </div>
+            }
+            @if (Model.JobOffer.SalaryTo.HasValue)
+            {
+                <div>
+                    <label>Salary to:</label>
+                    <span id="salaryTo">@Model.JobOffer.SalaryTo</span>
+                </div>
+            }
+            <div>
+                <label>Created:</label>
+                <span id="created">@Model.JobOffer.Created.Date.ToShortDateString()</span>
+            </div>
+            @if (Model.JobOffer.ValidUntil.HasValue)
+            {
+                <div>
+                    <label>Valid:</label>
+                    <span id="valid">@Model.JobOffer.ValidUntil.Value.Subtract(DateTime.Now).Days days (@Model.JobOffer.ValidUntil.Value.Date.ToShortDateString())</span>
+                </div>
+            }
+        </div>
+        @Html.ActionLink("Go to job offer", "Details", "JobOffer", new { id = Model.JobOffer.ID }, new { @class = "btn btn-primary" })
+    </div>
 </div>
-

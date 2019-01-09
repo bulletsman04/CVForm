@@ -107,6 +107,12 @@ td.pagesSwitchContent {
     padding-left: 0;
     padding-right: 0;
 }
+
+.black-underlined-link {
+    color: black;
+    text-decoration: underline;
+}
+
 /* JQuery Validation classes */
 .js-invalid {
     color: red;
