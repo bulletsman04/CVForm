@@ -49,7 +49,7 @@
                 </div>
             }
             <div>
-                @Html.ActionLink("Apply now", "Index", "Apply", new { id = Model.ID }, new { @class = "btn btn-primary" })
+                @Html.ActionLink("Apply now", "Create", "Apply", new { id = Model.ID }, new { @class = "btn btn-primary" })
                 @if ((await AuthorizationService.AuthorizeAsync(User, "Admin")).Succeeded)
                 {
 

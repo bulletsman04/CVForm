@@ -113,6 +113,11 @@ td.pagesSwitchContent {
     text-decoration: underline;
 }
 
+.centered-button-cell{
+    margin-top: 0;
+}
+
+
 /* JQuery Validation classes */
 .js-invalid {
     color: red;

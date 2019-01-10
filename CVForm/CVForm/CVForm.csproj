@@ -33,7 +33,7 @@
     <Content Update="Views\Apply\Details.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
-    <Content Update="Views\Apply\Index.cshtml">
+    <Content Update="Views\Apply\Create.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
     <Content Update="Views\Companies\Edit.cshtml">

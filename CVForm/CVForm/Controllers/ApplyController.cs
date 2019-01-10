@@ -25,7 +25,13 @@ namespace CVForm.Controllers
             _context = context;
             _configuration = Configuration;
         }
-        public async Task<ActionResult> Index(int id)
+
+        public async Task<ActionResult> Index()
+        {
+            return View(_context.JobApplications.ToList());
+        }
+
+        public async Task<ActionResult> Create(int id)
         {
             var jobApplication = new JobApplicationViewModel()
             {
@@ -36,7 +42,7 @@ namespace CVForm.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Index(JobApplicationViewModel model)
+        public async Task<IActionResult> Create(JobApplicationViewModel model)
         {
             //ToDo: Accept only pdf
             if (!ModelState.IsValid)

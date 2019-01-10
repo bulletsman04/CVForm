@@ -45,7 +45,7 @@
             </div>
 
             <div>
-                @Html.ActionLink("Apply now", "Index", "Apply", new { id = Model.ID }, new { @class = "btn btn-primary", disabled = "disabled" })
+                @Html.ActionLink("Apply now", "Create", "Apply", new { id = Model.ID }, new { @class = "btn btn-primary", disabled = "disabled" })
                 @Html.ActionLink("Edit", "Edit", new { id = Model.ID }, new { @class = "btn btn-primary", disabled = "disabled" })
                 @using (Html.BeginForm("Delete", "JobOffer", new { Model.ID }, FormMethod.Post, null, new { style = "display:inline;" }))
                 {
