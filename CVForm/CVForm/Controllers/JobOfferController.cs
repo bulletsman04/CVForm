@@ -79,15 +79,18 @@ namespace CVForm.Controllers
             return View(offerEditView);
         }
 
-        [HttpPost]
+        [HttpPost("[controller]/Edit/{id?}")]
+        [Authorize(Policy = "Admin")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(JobOfferCreateView model)
         {
             if (!ModelState.IsValid)
                 return View();
             var offer = _context.JobOfers.FirstOrDefault(item => item.ID == model.ID);
+            var test = "0";
             if (offer != null)
             {
+                test = "1";
                 offer.CompanyId = model.CompanyId;
                 offer.Description = model.Description;
                 offer.JobTitle = model.JobTitle;
@@ -98,7 +101,7 @@ namespace CVForm.Controllers
                 
                 await _context.SaveChangesAsync();
             }
-            return RedirectToAction("Details", new {id = model.ID});
+            return RedirectToAction("Details", new {id = test});
         }
 
         [HttpPost]
