@@ -105,6 +105,11 @@ namespace CVForm.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.NotFound);
             }
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            if (application.UserId != userId)
+            {
+                return Unauthorized();
+            }
 
             JobAppicationDetailsViewModel jobAppicationDetailsViewModel = new JobAppicationDetailsViewModel()
             {

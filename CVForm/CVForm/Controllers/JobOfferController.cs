@@ -21,13 +21,10 @@ namespace CVForm.Controllers
     public class JobOfferController : Controller
     {
         private readonly DataContext _context;
-        private IConfiguration _configuration;
-        private AppSettings AppSettings { get; set; }
+        
 
-        public JobOfferController(DataContext context,IConfiguration configuration)
+        public JobOfferController(DataContext context)
         {
-            _configuration = configuration;
-            AppSettings = _configuration.GetSection("AppSettings").Get<AppSettings>();
             _context = context;
         }
 
@@ -48,22 +45,11 @@ namespace CVForm.Controllers
             return View(selected);
         }
 
-        [Authorize]
+        [Authorize(Policy = "Admin")]
         [HttpGet("[controller]/Edit/{id?}")]
         public async Task<IActionResult> Edit(int? id)
         {
             
-            AADGraph graph = new AADGraph(AppSettings);
-            string groupName = "Admins";
-            string groupId = AppSettings.AADGroups.FirstOrDefault(g =>
-                String.Compare(g.Name, groupName) == 0).Id;
-            bool isIngroup = await graph.IsUserInGroup(User.Claims, groupId);
-
-            if (!isIngroup)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
-            }
-
 
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -93,6 +79,7 @@ namespace CVForm.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Policy = "Admin")]
         public async Task<IActionResult> Edit(JobOfferCreateView model)
         {
             if (!ModelState.IsValid)
@@ -115,6 +102,7 @@ namespace CVForm.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Policy = "Admin")]
         public async Task<IActionResult> Delete(int? id)
         {
             if(id==null)
@@ -138,6 +126,7 @@ namespace CVForm.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Policy = "Admin")]
         public async Task<IActionResult> Create(JobOfferCreateView model)
         {
             if (!ModelState.IsValid)

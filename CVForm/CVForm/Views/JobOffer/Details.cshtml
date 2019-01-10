@@ -2,7 +2,8 @@
 @{
     ViewData["Title"] = "Details";
 }
-
+@using Microsoft.AspNetCore.Authorization
+@inject IAuthorizationService AuthorizationService
 <script src="@Url.Content("~/js/offers-details.js")"></script>
 <div class="row page-box">
     <h1>@Model.JobTitle</h1>
@@ -48,12 +49,17 @@
                 </div>
             }
             <div>
-                @Html.ActionLink("Apply now", "Index", "Apply", new {id = Model.ID}, new {@class = "btn btn-primary"})
-                @Html.ActionLink("Edit", "Edit", new {id = Model.ID}, new {@class = "btn btn-primary"})
-                @using (Html.BeginForm("Delete", "JobOffer", new {Model.ID}, FormMethod.Post, null, new {style = "display:inline;"}))
+                @Html.ActionLink("Apply now", "Index", "Apply", new { id = Model.ID }, new { @class = "btn btn-primary" })
+                @if ((await AuthorizationService.AuthorizeAsync(User, "Admin")).Succeeded)
                 {
+
+                    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }, new { @class = "btn btn-primary" })
+                    
+                    using (Html.BeginForm("Delete", "JobOffer", new { Model.ID }, FormMethod.Post, null, new { style = "display:inline;" }))
+                    {
                         @*@Html.AntiForgeryToken()*@
-                    <button type="submit" class="btn btn-danger">Delete</button>
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    }
                 }
             </div>
         </div>
@@ -65,14 +71,13 @@
     <div class="col-sm-8 job-applications">
         <table class="table table-striped table-hover">
             <thead class="thead-dark">
-            <tr>
-                <th scope="col">Name</th>
-                <th scope="col">Email</th>
-                <th scope="col">Phone</th>
-            </tr>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Phone</th>
+                </tr>
             </thead>
-            <tbody id="applications">
-            </tbody>
+            <tbody id="applications"></tbody>
         </table>
     </div>
 </div>
