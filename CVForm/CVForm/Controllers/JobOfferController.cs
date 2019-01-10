@@ -38,6 +38,7 @@ namespace CVForm.Controllers
         [Authorize]
         public IActionResult Details(int? id)
         {
+
             JobOffer selected = _context.JobOfers.Include(item => item.Company).Include(item => item.JobApplications).FirstOrDefault(item => item.ID == id);
 
             if (selected == null)
@@ -137,31 +138,24 @@ namespace CVForm.Controllers
                 return View(model);
             }
 
-         
-           JobOffer jobOffer =  new JobOffer()
-            {
-                
-                CompanyId = model.CompanyId,
-                Description = model.Description,
-                JobTitle = model.JobTitle,
-                Location = model.Location,
-                SalaryFrom = model.SalaryFrom,
-                SalaryTo = model.SalaryTo,
-                ValidUntil = model.ValidUntil,
-                Created = DateTime.Now
-            };
-            //  IValidable object
-            try
-            {
-                _context.JobOfers.Add(jobOffer);
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateException e)
-            {
-                model.Companies = _context.Companies.ToList();
-                return View(model);
-            }
+            
+                JobOffer jobOffer = new JobOffer()
+                {
 
+                    CompanyId = model.CompanyId,
+                    Description = model.Description,
+                    JobTitle = model.JobTitle,
+                    Location = model.Location,
+                    SalaryFrom = model.SalaryFrom,
+                    SalaryTo = model.SalaryTo,
+                    ValidUntil = model.ValidUntil,
+                    Created = DateTime.Now
+                };
+          
+
+            _context.JobOfers.Add(jobOffer);
+            await _context.SaveChangesAsync();
+       
             return RedirectToAction("Index");
         }
 

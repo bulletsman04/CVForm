@@ -61,5 +61,23 @@ namespace Tests
                 Assert.IsInstanceOf<JobOffer>(result.Model);
             }
         }
+
+        [Test]
+        public void Create_WhenModelIsNull_ThrowNullReferenceException()
+        {
+            // Arrange
+            var options = new DbContextOptionsBuilder<DataContext>()
+                .UseInMemoryDatabase(databaseName: "Create_WhenModelIsNull_ThrowNullReferenceException")
+                .Options;
+
+
+            using (var context = new DataContext(options))
+            {
+                var controller = new JobOfferController(context);
+
+                //Act and Assert 
+                Assert.ThrowsAsync<NullReferenceException> ( () => controller.Create(null));
+            }
+        }
     }
 }
