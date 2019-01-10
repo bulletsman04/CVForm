@@ -34,8 +34,12 @@
                     <a asp-area="" asp-controller="JobOffer" asp-action="Index">Home</a>
                 </li>
                 <li>
+                    <a href="~/swagger">API Documentation</a>
+                </li>
+                <li>
                     <a asp-area="" asp-controller="Home" asp-action="About">About</a>
                 </li>
+               
                 @if ((await AuthorizationService.AuthorizeAsync(User, "Admin")).Succeeded)
                 {
                     <li class="dropdown">
