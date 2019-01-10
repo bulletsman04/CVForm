@@ -28,11 +28,11 @@ namespace CVForm.Controllers
         public IActionResult Edit(int? id)
         {
             if (id == null)
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return BadRequest();
             var offer = _context.Companies.FirstOrDefault(item => item.ID == id);
 
             if (offer == null)
-                return new HttpStatusCodeResult(HttpStatusCode.NotFound);
+                return NotFound();
 
             return View(offer);
         }
@@ -79,7 +79,8 @@ namespace CVForm.Controllers
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return BadRequest();
+
             _context.Companies.RemoveRange(_context.Companies.Where(item => item.ID == id));
             await _context.SaveChangesAsync();
             return RedirectToAction("Index");

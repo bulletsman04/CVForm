@@ -34,6 +34,7 @@ namespace CVForm.Controllers
         {
             return View();
         }
+
         [HttpGet("[controller]/Details/{id?}")]
         [Authorize]
         public IActionResult Details(int? id)
@@ -53,11 +54,11 @@ namespace CVForm.Controllers
             
 
             if (id == null)
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return BadRequest();
             var offer = _context.JobOfers.Include(item => item.Company).FirstOrDefault(item => item.ID == id);
 
             if (offer == null)
-                return new HttpStatusCodeResult(HttpStatusCode.NotFound);
+                return NotFound();
 
 
             var offerEditView = new JobOfferCreateView()
@@ -107,7 +108,8 @@ namespace CVForm.Controllers
         public async Task<IActionResult> Delete(int? id)
         {
             if(id==null)
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return BadRequest();
+
             _context.RemoveRange(_context.JobOfers.Where(item => item.ID == id));
           
             await _context.SaveChangesAsync();
@@ -161,10 +163,5 @@ namespace CVForm.Controllers
 
 
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
     }
 }

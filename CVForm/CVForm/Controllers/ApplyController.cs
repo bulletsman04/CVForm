@@ -73,37 +73,14 @@ namespace CVForm.Controllers
                 CvUrl = cvFileName,
                 UserId = userId
             };
-
-
+            
 
             _context.JobApplications.Add(jobApplication);
             await _context.SaveChangesAsync();
+
             return RedirectToAction("Details", "JobOffer", new { id = model.OfferId });
         }
 
-        private async Task<string> SaveCVToStorage(JobApplicationViewModel model)
-        {
-            string cvFileName = "";
-            var userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
-            CloudStorageAccount storageAccount = null;
-            if (CloudStorageAccount.TryParse(_configuration["ConnectionStrings:BlobStorage"], out storageAccount))
-            {
-                CloudBlobClient cloudBlobClient = storageAccount.CreateCloudBlobClient();
-
-                CloudBlobContainer container = cloudBlobClient.GetContainerReference(_configuration["OtherStrings:BlobContainerReference"]);
-
-                CloudBlockBlob blockBlob = container.GetBlockBlobReference(userId + "_CV.pdf");
-
-                using (var stream = model.CvFile.OpenReadStream())
-                {
-                    await blockBlob.UploadFromStreamAsync(stream);
-                }
-
-                cvFileName = blockBlob.Uri.AbsoluteUri;
-            }
-
-            return cvFileName;
-        }
 
         public async Task<IActionResult> Details(int offerId, int applicationId)
         {
@@ -111,7 +88,7 @@ namespace CVForm.Controllers
 
             if (application == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.NotFound);
+                return NotFound();
             }
             var userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
             if (application.UserId != userId)
@@ -135,6 +112,31 @@ namespace CVForm.Controllers
 
 
             return View(jobAppicationDetailsViewModel);
+        }
+
+
+        private async Task<string> SaveCVToStorage(JobApplicationViewModel model)
+        {
+            string cvFileName = "";
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            CloudStorageAccount storageAccount = null;
+            if (CloudStorageAccount.TryParse(_configuration["ConnectionStrings:BlobStorage"], out storageAccount))
+            {
+                CloudBlobClient cloudBlobClient = storageAccount.CreateCloudBlobClient();
+
+                CloudBlobContainer container = cloudBlobClient.GetContainerReference(_configuration["OtherStrings:BlobContainerReference"]);
+
+                CloudBlockBlob blockBlob = container.GetBlockBlobReference(userId + "_CV.pdf");
+
+                using (var stream = model.CvFile.OpenReadStream())
+                {
+                    await blockBlob.UploadFromStreamAsync(stream);
+                }
+
+                cvFileName = blockBlob.Uri.AbsoluteUri;
+            }
+
+            return cvFileName;
         }
     }
 }
