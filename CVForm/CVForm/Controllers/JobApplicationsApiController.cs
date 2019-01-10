@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using CVForm.EntityFramework;
 using CVForm.Models;
@@ -28,8 +29,10 @@ namespace CVForm.Controllers
         [HttpGet("{offerId}")]
         public ActionResult<List<JobApplication>> OffersSearch(int offerId)
         {
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+
             List<JobApplication> searchResult =
-                _context.JobOfers.Include(item => item.JobApplications).FirstOrDefault(item => item.ID == offerId).JobApplications;
+                _context.JobOfers.Include(item => item.JobApplications).FirstOrDefault(item => item.ID == offerId ).JobApplications.FindAll(application =>  application.UserId == userId);
            
             return Ok(searchResult);
         }

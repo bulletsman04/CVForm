@@ -11,6 +11,8 @@ namespace CVForm.Models
         public int Id { get; set; }
         // ToDO: TU nazwaliśmy niezgodnie z koncepcją, więc EF utwórzył FK do JobOfeer o nazwie JobOfferId
         public int OfferId { get; set; }
+        public string UserId { get; set; }
+
         [Required]
         [Display(Name = "First name: ")]
         public string FirstName { get; set; }

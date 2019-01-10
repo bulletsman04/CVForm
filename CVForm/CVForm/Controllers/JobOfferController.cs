@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
@@ -42,7 +43,8 @@ namespace CVForm.Controllers
             JobOffer selected = _context.JobOfers.Include(item => item.Company).Include(item => item.JobApplications).FirstOrDefault(item => item.ID == id);
 
             if (selected == null)
-                return new HttpStatusCodeResult(HttpStatusCode.NotFound);
+                //  return new HttpStatusCodeResult(HttpStatusCode.NotFound);
+                return NotFound();
             return View(selected);
         }
 
@@ -172,5 +174,12 @@ namespace CVForm.Controllers
             return RedirectToAction("Index");
         }
 
-}
+
+
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        public IActionResult Error()
+        {
+            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+    }
 }

@@ -12,6 +12,7 @@ namespace CVForm.Models
     public class JobOffer: IValidatableObject
     {
         public int ID { get; set; }
+
         [Display(Name = "Job title")]
         [Required]
         public string JobTitle { get; set; }

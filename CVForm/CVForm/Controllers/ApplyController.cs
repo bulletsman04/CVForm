@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using CVForm.EntityFramework;
 using CVForm.Models;
@@ -40,25 +41,51 @@ namespace CVForm.Controllers
             //ToDo: Accept only pdf
             if (!ModelState.IsValid)
             {
-               return View(model);
+                return View(model);
             }
-            
+
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            JobApplication jobApplicationDb =
+                _context.JobApplications.FirstOrDefault(application => application.UserId == userId);
+            if (jobApplicationDb != null)
+            {
+                _context.JobApplications.Remove(jobApplicationDb);
+            }
+
+            string cvFileName = await SaveCVToStorage(model);
+
+            JobApplication jobApplication = new JobApplication()
+            {
+                FirstName = model.FirstName,
+                LastName = model.LastName,
+                EmailAddress = model.EmailAddress,
+                PhoneNumber = model.PhoneNumber,
+                ContactAgreement = model.ContactAgreement,
+                OfferId = model.OfferId,
+                CvUrl = cvFileName,
+                UserId = userId
+            };
+
+
+
+            _context.JobApplications.Add(jobApplication);
+            await _context.SaveChangesAsync();
+            return RedirectToAction("Details", "JobOffer", new { id = model.OfferId });
+        }
+
+        private async Task<string> SaveCVToStorage(JobApplicationViewModel model)
+        {
             string cvFileName = "";
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
             CloudStorageAccount storageAccount = null;
             if (CloudStorageAccount.TryParse(_configuration["ConnectionStrings:BlobStorage"], out storageAccount))
             {
                 CloudBlobClient cloudBlobClient = storageAccount.CreateCloudBlobClient();
 
-               
-                // Get reference to the blob container by passing the name by reading the value from the configuration (appsettings.json)
                 CloudBlobContainer container = cloudBlobClient.GetContainerReference(_configuration["OtherStrings:BlobContainerReference"]);
-                //await container.CreateIfNotExistsAsync();
 
-                //ToDo: Better name and then change in flow to display appriopriately in sharepoint - firstly logged user id?
-                // Get the reference to the block blob from the container
-                CloudBlockBlob blockBlob = container.GetBlockBlobReference(model.CvFile.FileName);
+                CloudBlockBlob blockBlob = container.GetBlockBlobReference(userId + "_CV.pdf");
 
-                // Upload the file
                 using (var stream = model.CvFile.OpenReadStream())
                 {
                     await blockBlob.UploadFromStreamAsync(stream);
@@ -67,24 +94,7 @@ namespace CVForm.Controllers
                 cvFileName = blockBlob.Uri.AbsoluteUri;
             }
 
-
-
-            JobApplication jobApplication =  new JobApplication()
-            {
-                FirstName = model.FirstName,
-                LastName = model.LastName,
-                EmailAddress = model.EmailAddress,
-                PhoneNumber = model.PhoneNumber,
-                ContactAgreement = model.ContactAgreement,
-                OfferId = model.OfferId,
-                CvUrl = cvFileName
-            };
-
-
-
-            _context.JobApplications.Add(jobApplication);
-            await _context.SaveChangesAsync();
-            return RedirectToAction("Details","JobOffer",new {id = model.OfferId});
+            return cvFileName;
         }
 
         public async Task<IActionResult> Details(int offerId, int applicationId)

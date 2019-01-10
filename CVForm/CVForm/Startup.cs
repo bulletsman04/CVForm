@@ -88,6 +88,9 @@ namespace CVForm
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+
+            app.UseStatusCodePagesWithRedirects("/Home/Error");
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -101,7 +104,7 @@ namespace CVForm
             app.UseSession();
             app.UseAuthentication();
 
-         
+  
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
