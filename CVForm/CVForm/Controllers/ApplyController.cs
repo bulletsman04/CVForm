@@ -20,9 +20,10 @@ namespace CVForm.Controllers
         
         private readonly DataContext _context;
         private IConfiguration _configuration;
-        public ApplyController(DataContext context, IConfiguration Configuration)
+        private IAuthorizationService _authorizationService;
+        public ApplyController(DataContext context, IConfiguration Configuration, IAuthorizationService iAuthorizationService)
         {
-            
+            _authorizationService = iAuthorizationService;   
             _context = context;
             _configuration = Configuration;
         }
@@ -91,7 +92,7 @@ namespace CVForm.Controllers
                 return NotFound();
             }
             var userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
-            if (application.UserId != userId)
+            if (application.UserId != userId && !(await _authorizationService.AuthorizeAsync(User, "Admin")).Succeeded)
             {
                 return Unauthorized();
             }
