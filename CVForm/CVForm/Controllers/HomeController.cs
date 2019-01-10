@@ -25,7 +25,7 @@ namespace CVForm.Controllers
     
         public IActionResult About()
         {
-            ViewData["Message"] = "Your application description page.";
+            ViewData["Message"] = "Short description of application.";
 
             return View();
         }
