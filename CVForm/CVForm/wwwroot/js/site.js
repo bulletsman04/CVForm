@@ -6,7 +6,7 @@ function parseDate(date) {
         month = "0" + month;
     }
     var day = date.getDate();
-    var dateString = day + '.' + month + '.' + year;
+    var dateString = month + '/' + day + '/' + year;
 
     return dateString;
 }
