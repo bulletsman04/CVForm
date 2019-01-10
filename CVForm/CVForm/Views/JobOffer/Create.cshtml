@@ -3,10 +3,7 @@
 @{
     ViewData["Title"] = "Create";
 }
-<script src="@Url.Content("~/lib/jquery-validation/dist/jquery.validate.js")"></script>
 
-<script src="@Url.Content("~/lib/jquery-validation/dist/additional-methods.js")"></script>
-<script src="@Url.Content("~/js/validation.js")"></script>
 <div class="row page-box">
     <div class="col-sm-7">
         <h2>Now Job Offer</h2>
@@ -72,7 +69,10 @@
     <div class="col-sm-5">
         @await Html.PartialAsync("_DetailsPartial")
     </div>
-    
+
+    <script src="@Url.Content("~/lib/jquery-validation/dist/jquery.validate.js")"></script>
+    <script src="@Url.Content("~/lib/jquery-validation/dist/additional-methods.js")"></script>
+    <script src="@Url.Content("~/js/validation.js")"></script>
     <script src="~/lib/knockout/knockout-debug.js"></script>
     @* ToDo: Because of knockout values are reseted after server form validation *@
     <script src="~/js/joboffer_knockout.js"></script>

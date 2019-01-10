@@ -4,7 +4,7 @@
 }
 @using Microsoft.AspNetCore.Authorization
 @inject IAuthorizationService AuthorizationService
-<script src="@Url.Content("~/js/offers-details.js")"></script>
+
 <div class="row page-box">
     <h1>@Model.JobTitle</h1>
     <div class="col-sm-8">
@@ -54,7 +54,7 @@
                 {
 
                     @Html.ActionLink("Edit", "Edit", new { id = Model.ID }, new { @class = "btn btn-primary" })
-                    
+
                     using (Html.BeginForm("Delete", "JobOffer", new { Model.ID }, FormMethod.Post, null, new { style = "display:inline;" }))
                     {
                         @*@Html.AntiForgeryToken()*@
@@ -81,3 +81,6 @@
         </table>
     </div>
 </div>
+
+
+<script src="@Url.Content("~/js/offers-details.js")"></script>

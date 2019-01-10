@@ -81,7 +81,6 @@ namespace CVForm.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Policy = "Admin")]
         public async Task<IActionResult> Edit(JobOfferCreateView model)
         {
             if (!ModelState.IsValid)
