@@ -1,7 +1,5 @@
 ﻿$(document).ready(function () {
-    var getUrl = window.location;
-    //var baseurl = getUrl.origin;
-    //var uri = baseurl + '/api/jobapplicationsapi';
+
     $("#jobOfferFormEdit").submit(function (e) {
         editOffer.call(this,e);
     });
