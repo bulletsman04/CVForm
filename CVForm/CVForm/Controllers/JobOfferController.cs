@@ -35,12 +35,12 @@ namespace CVForm.Controllers
             return View();
         }
         [HttpGet("[controller]/Details/{id?}")]
+        [Authorize]
         public IActionResult Details(int? id)
         {
             JobOffer selected = _context.JobOfers.Include(item => item.Company).Include(item => item.JobApplications).FirstOrDefault(item => item.ID == id);
 
             if (selected == null)
-                //  return new HttpStatusCodeResult(HttpStatusCode.NotFound);
                 return NotFound();
             return View(selected);
         }
@@ -114,6 +114,8 @@ namespace CVForm.Controllers
             return RedirectToAction("Index");
         }
 
+
+        [Authorize(Policy = "Admin")]
         public async Task<ActionResult> Create()
         {
             var model = new JobOfferCreateView()
