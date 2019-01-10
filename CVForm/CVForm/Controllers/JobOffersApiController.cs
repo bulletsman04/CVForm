@@ -48,7 +48,7 @@ namespace CVForm.Controllers
             List<JobOffer> searchResult = _context.JobOfers.Include(item => item.Company).ToList();
             if (!String.IsNullOrEmpty(searchString))
             {
-                searchResult = searchResult.FindAll(item => item.JobTitle.Contains(searchString)).ToList();
+                searchResult = searchResult.FindAll(item => item.JobTitle.ToLower().Contains(searchString.ToLower())).ToList();
             }
 
             PagingViewModel pagedOffers = PreparePagingViewModel(pageNumber,searchResult);

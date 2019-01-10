@@ -6,7 +6,7 @@
     }, "Upper bound of salary must be bigger than lower bound");
 
     $.validator.addMethod("minDate", function (value, element) {
-        var curDate = new Date();
+        var curDate = Date.now();
         var inputDate = new Date(value);
         if (inputDate >= curDate)
             return true;
