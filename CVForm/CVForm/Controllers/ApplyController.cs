@@ -6,6 +6,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using CVForm.EntityFramework;
 using CVForm.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -26,6 +27,7 @@ namespace CVForm.Controllers
             _configuration = Configuration;
         }
 
+        [Authorize(Policy = "Admin")]
         public async Task<ActionResult> Index()
         {
             return View(_context.JobApplications.ToList());
