@@ -44,6 +44,7 @@ namespace CVForm
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
             services.AddSingleton<IConfiguration>(Configuration);
+
             services.AddAuthentication(sharedOptions =>
                 {
                     sharedOptions.DefaultScheme =
@@ -54,6 +55,7 @@ namespace CVForm
                 .AddAzureAdB2C(options => Configuration.Bind("Authentication:AzureAdB2C",
                     options))
                 .AddCookie();
+
             services.AddMemoryCache();
             services.AddDistributedMemoryCache();
             services.AddSession();
@@ -63,7 +65,9 @@ namespace CVForm
                 options.AddPolicy("Admin", policy =>
                     policy.Requirements.Add(new InAdminsGroupRequirement()));
             });
+
             services.AddSingleton<IAuthorizationHandler, InAdminsGroupHandler>();
+
             services.AddSwaggerGen(c =>
             {
                 //The generated Swagger JSON file will have these properties.
