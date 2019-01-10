@@ -55,7 +55,7 @@ namespace CVForm.Controllers
 
             var userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
             JobApplication jobApplicationDb =
-                _context.JobApplications.FirstOrDefault(application => application.UserId == userId);
+                _context.JobApplications.FirstOrDefault(application => application.UserId == userId && application.OfferId == model.OfferId);
             if (jobApplicationDb != null)
             {
                 _context.JobApplications.Remove(jobApplicationDb);
@@ -127,7 +127,7 @@ namespace CVForm.Controllers
 
                 CloudBlobContainer container = cloudBlobClient.GetContainerReference(_configuration["OtherStrings:BlobContainerReference"]);
 
-                CloudBlockBlob blockBlob = container.GetBlockBlobReference(userId + "_CV.pdf");
+                CloudBlockBlob blockBlob = container.GetBlockBlobReference(userId + "_" + model.OfferId + "_CV.pdf");
 
                 using (var stream = model.CvFile.OpenReadStream())
                 {
