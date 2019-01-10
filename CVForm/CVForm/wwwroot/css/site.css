@@ -151,13 +151,18 @@ input[type="checkbox"] {
 }
 
 /* JQuery Validation classes */
-.js-invalid {
-    color: red;
-    margin-top: 7px; 
+
+
+.js-invalid-input {
+    color: red !important;
 }
 
-.js-success {
-    border-color: green;
+label.js-invalid-input {
+    margin-top: 7px;
+}
+
+.js-success-input {
+    border-color: green !important;
 }
 
 .js-edited-success {
@@ -165,7 +170,7 @@ input[type="checkbox"] {
 }
 
 .js-edited-failure {
-    color: green;
+    color: red;
 }
 .loader {
     border: 16px solid #f3f3f3;

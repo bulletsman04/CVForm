@@ -50,8 +50,8 @@
             var potentialParent = element.parent("div").parent("div");
             potentialParent.length == 0 ? error.appendTo(element.parent("div")) : error.appendTo(element.parent("div").parent("div"));
         },
-        errorClass: "js-invalid",
-        validClass: "js-success"
+        errorClass: "js-invalid-input",
+        validClass: "js-success-input"
     });
 
     
