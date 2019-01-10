@@ -55,13 +55,16 @@
 <partial name="_CookieConsentPartial"/>
 
 <div class="container body-content">
+    <div class="main-content">
     @RenderBody()
+    
+    </div>
     <hr/>
-    <footer>
-        <p>&copy; 2018 - CVForm</p>
-    </footer>
+    
 </div>
-
+<footer class="page-footer font-small special-color-dark pt-4">
+    <p>&copy; 2018 - CVForm</p>
+</footer>
 <environment include="Development">
     <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
 </environment>
