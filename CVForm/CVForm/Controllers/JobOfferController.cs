@@ -40,10 +40,17 @@ namespace CVForm.Controllers
         public IActionResult Details(int? id)
         {
 
-            JobOffer selected = _context.JobOfers.Include(item => item.Company).Include(item => item.JobApplications).FirstOrDefault(item => item.ID == id);
+            //JobOffer selected = _context.JobOfers.Include(item => item.Company).Include(item => item.JobApplications).FirstOrDefault(item => item.ID == id)
+            JobOffer selected = _context.JobOfers.FirstOrDefault(item => item.ID == id);
 
             if (selected == null)
                 return NotFound();
+
+            selected.Company = _context.Companies.FirstOrDefault(item => item.ID == selected.CompanyId);
+            selected.JobApplications = _context.JobApplications.Where(item => item.OfferId == selected.ID).ToList();
+
+
+          
             return View(selected);
         }
 

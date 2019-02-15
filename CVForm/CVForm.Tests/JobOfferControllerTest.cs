@@ -44,10 +44,9 @@ namespace Tests
             {
                 context.JobOfers.Add(new JobOffer()
                 {
-                    ID = 1,
-                    CompanyId = 1
+                    ID = 1
                 });
-                context.Companies.Add(new Company() {ID = 1});
+
                 context.SaveChanges();
                 var controller = new JobOfferController(context);
 
