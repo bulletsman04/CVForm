@@ -1,20 +1,25 @@
-# Introduction 
-TODO: Give a short introduction of your project. Let this section explain the objectives or the motivation behind this project. 
+# CVForm
 
-# Getting Started
-TODO: Guide users through getting your code up and running on their own system. In this section you can talk about:
-1.	Installation process
-2.	Software dependencies
-3.	Latest releases
-4.	API references
+[![Build Status](https://dev.azure.com/ASPNetCoreCourse2018/CVForm/_apis/build/status/CVForm?branchName=master)](https://dev.azure.com/ASPNetCoreCourse2018/CVForm/_build/latest?definitionId=3&branchName=master)
 
-# Build and Test
-TODO: Describe and show how to build your code and run the tests. 
+Web service that is a simulation of of a platform for recritment processess. It allows companies to publish job offers and users to sign up and apply for a job. 
 
-# Contribute
-TODO: Explain how other users and developers can contribute to make your code better. 
+It's been published using Microsoft Azure. Here's the link: https://websitedj566vg2lpxza.azurewebsites.net/.
+You can sign up or use account:
+User: mike.wielgosz@wp.pl
+Password: Test1234
 
-If you want to learn more about creating good readme files then refer the following [guidelines](https://www.visualstudio.com/en-us/docs/git/create-a-readme). You can also seek inspiration from the below readme files:
-- [ASP.NET Core](https://github.com/aspnet/Home)
-- [Visual Studio Code](https://github.com/Microsoft/vscode)
-- [Chakra Core](https://github.com/Microsoft/ChakraCore)
+Original repository (with CI/CD) is on Azure Devops.
+
+# What I Learned
+
+* C#
+* ASP.NET Core
+* ASP.NET Web API
+* EF (Core)
+* JS
+* Bootstrap
+* Microsoft Azure
+* CI/CD
+* NUnit
+* Swagger
