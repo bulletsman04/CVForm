@@ -8,9 +8,9 @@ It's been published using Microsoft Azure. Here's the link: https://websitedj566
 
 You can sign up or use account:
 
-User: mike.wielgosz@wp.pl
+*User: mike.wielgosz@wp.pl*
 
-Password: Test1234
+*Password: Test1234*
 
 Original repository (with CI/CD) is on Azure Devops.
 
