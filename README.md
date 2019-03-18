@@ -2,7 +2,7 @@
 
 [![Build Status](https://dev.azure.com/ASPNetCoreCourse2018/CVForm/_apis/build/status/CVForm?branchName=master)](https://dev.azure.com/ASPNetCoreCourse2018/CVForm/_build/latest?definitionId=3&branchName=master)
 
-Web service that is a simulation of of a platform for recritment processess. It allows companies to publish job offers and users to sign up and apply for a job. 
+Web service that is a simulation of of a platform for recruitment processess. It allows companies to publish job offers and users to sign up and apply for a job. 
 
 It's been published using Microsoft Azure. Here's the link: https://websitedj566vg2lpxza.azurewebsites.net/.
 
